@@ -16,9 +16,16 @@ spec:
         app: edgesite-server
     spec:
       hostNetwork: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/edge
+                  operator: DoesNotExist
       containers:
         - name: edgesite-server
-          image: kubeedge/edgesite-server-amd64:[YOUR-VERSION]
+          image: kubeedge/edgesite-server:v1.12.1
           imagePullPolicy: IfNotPresent
           command: [ "/edgesite-server"]
           args: [
